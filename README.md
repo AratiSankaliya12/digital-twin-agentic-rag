@@ -107,13 +107,28 @@ The system follows a **ReAct (Reasoning + Acting)** loop:
 
 ## 📂 Project Structure
 
+This repository is organized into phases, mirroring my learning journey from basic experiments to a production microservice.
+
 ```text
-├── data/                   # Place your PDFs, CSVs, and Code files here
-├── app.py                  # Main Streamlit application
-├── agent_logic.py          # LangChain Agent and Tool definitions
-├── vector_store.py         # ChromaDB setup and data ingestion logic
-├── requirements.txt        # Project dependencies
-└── README.md               # Documentation
+├── 00_The_Research_Lab/       # Phase 0: R&D
+│   ├── Memory_Experiments/    # Prototypes for Interactive vs Persistent Memory
+│   └── RAG_Experiments/       # Evolution from Basic PDF RAG to Multi-Doc Routers
+│
+├── 01_The_Pipeline/           # Phase 1: The Core
+│   └── main.py                # Basic RAG bot (Fixed "Ghost Data" & Hallucinations)
+│
+├── 02_The_Agent/              # Phase 2: The Brain
+│   └── agent.py               # ReAct Agent with Tool Calling (File Search + DuckDuckGo)
+│
+├── 03_The_Interface/          # Phase 3: The Face
+│   └── app.py                 # Streamlit Web App with Session State & Caching
+│
+├── 04_The_Production_API/     # Phase 4: The Microservice
+│   ├── server.py              # FastAPI Backend (REST API)
+│   └── rag_core.py            # Decoupled Agent Logic
+│
+├── assets/                    # Screenshots & Demo Videos
+└── README.md                  # Documentation
 ```
 ---
 
