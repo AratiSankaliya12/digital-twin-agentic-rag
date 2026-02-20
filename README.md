@@ -9,7 +9,7 @@ A production-grade **Agentic RAG (Retrieval-Augmented Generation)** system that 
 > **"Mind decides. Body acts."**
 > Watch how the Agentic Brain processes a user query in real-time vs. retrieving static memory.
 
-*[watch the full architectural breakdown on LinkedIn](YOUR_LINKEDIN_POST_URL_HERE).*
+*[watch the full architectural breakdown on LinkedIn](https://www.linkedin.com/feed/update/urn:li:activity:7424666816813223937/?originTrackingId=dKu36J6UxoOKh2MaveFe1Q%3D%3D).*
 
 ---
 
