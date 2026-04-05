@@ -1,4 +1,5 @@
 import os
+import config  # Loads environment variables from .env
 
 # 1. New Imports for LangChain v1.0+
 # We use 'langchain_classic' because ConversationChain was moved there
@@ -7,10 +8,8 @@ from langchain_openai import ChatOpenAI
 from langchain_classic.memory import ConversationSummaryMemory
 
 # 2. Setup your API Key
-# Replace 'sk-...' with your actual key from platform.openai.com
-os.environ["OPENAI_API_KEY"] = (
-    "OPENAI_API_KEY"
-)
+#  Removed hardcoded API key
+#  Now using .env file via config.py
 
 # 3. Initialize the Brain (OpenAI)
 # model="gpt-4o" is the smartest, "gpt-3.5-turbo" is cheaper
