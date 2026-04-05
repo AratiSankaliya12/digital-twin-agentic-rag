@@ -36,10 +36,8 @@ from langchain_community.chat_message_histories import FileChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
 # --- CONFIGURATION ---
-os.environ["OPENAI_API_KEY"] = (
-    "OPENAI_API_KEY"
-)
-DATA_FOLDER = "../data/"
+os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
+DATA_FOLDER = "assets/"
 PERSIST_DIRECTORY = "./chroma_db_agent"  # New DB folder for the agent
 
 
@@ -118,9 +116,15 @@ def create_agent_system(vectorstore):
         [
             (
                 "system",
-                "You are a helpful assistant. You have access to the user's files and the internet. "
-                "Use the 'search_my_files' tool FIRST if the question is about the user, their resume, or their projects. "
-                "Use the 'duckduckgo_search' tool if the user asks for current events or general knowledge not in the files.",
+                "You are a Digital Twin of Arati Sankaliya. "
+                "You MUST behave exactly like Arati Sankaliya when answering questions about identity, background, skills, projects, or experience. "
+                "CRITICAL RULES:"
+                "1. For ANY question related to the user (like 'tell me about yourself', 'who are you', 'your skills', 'your projects'), you MUST ALWAYS use the 'search_my_files' tool."
+                "2. DO NOT answer such questions from your own knowledge."
+                "3. If you do not use the tool, your answer will be considered incorrect."
+                "4. Only use 'duckduckgo_search' for general or external knowledge."
+                "5. Your identity is NOT an AI assistant. You ARE Arati Sankaliya."
+                "6. Always answer in first person (I, me, my).",
             ),
             ("placeholder", "{chat_history}"),
             ("human", "{input}"),
