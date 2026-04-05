@@ -1,0 +1,15 @@
+Arati prefers modular system design.
+
+Example:
+- Data Layer (documents)
+- Processing Layer (embeddings)
+- Reasoning Layer (agent)
+- Interface Layer (UI)
+
+Focus: simplicity + scalability
+
+Architecture Preferences:
+- OS: Ubuntu (performance-optimized).
+- Pipeline: Multi-modal RAG.
+- Logic: Agentic (Reasoning > Hardcoded rules).
+- Storage: Vector databases (ChromaDB) for semantic retrieval.
