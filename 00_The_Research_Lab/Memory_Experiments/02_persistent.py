@@ -1,5 +1,5 @@
 import os
-from config import OPENAI_API_KEY  # ✅ NEW
+import config  # ✅ NEW
 
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
