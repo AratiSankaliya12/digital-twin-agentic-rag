@@ -1,0 +1,7 @@
+Project Name,Type,Phase,Status,Tech Stack,GitHub,Deployment,Resume Ready,Difficulty
+Student Performance Predictor,ML,Internship,Idea,"Python, Pandas, Scikit-learn",,,FALSE,Easy
+Image Classification System,DL,Internship,Idea,"Python, PyTorch, CNN",,,FALSE,Medium
+GenAI Resume Analyzer,GenAI,Internship,Idea,"Python, LLM, FastAPI, Streamlit",,,FALSE,Medium
+RAG-Based QA System,GenAI,Placement,Idea,"Python, LLM, RAG, FAISS",,,FALSE,Hard
+AI Automation Pipeline,Automation,Placement,Idea,"Python, Airflow, Docker",,,FALSE,Hard
+
