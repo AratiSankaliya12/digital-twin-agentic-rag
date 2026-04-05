@@ -2,6 +2,7 @@ import streamlit as st
 import sys
 import os
 import time
+import random
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -14,7 +15,7 @@ st.set_page_config(
     page_title="Digital Twin AI Assistant", page_icon="🧠", layout="centered"
 )
 
-# --- CUSTOM STYLING (Human Feel UI) ---
+# --- CUSTOM STYLING ---
 st.markdown(
     """
 <style>
@@ -51,12 +52,12 @@ and also explore the **internet when needed** 🌍
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Initial human-like greeting
+# Initial greeting
 if len(st.session_state.messages) == 0:
     st.session_state.messages.append(
         {
             "role": "assistant",
-            "content": "Hey 👋 I'm Arati's Digital Twin. You can ask me about my projects, skills, or anything AI-related!",
+            "content": "Hey 👋 I'm Arati's Digital Twin. Feel free to ask me anything about my work, projects, or AI journey!",
         }
     )
 
@@ -112,17 +113,21 @@ if user_input := st.chat_input(
 
                 full_response = response["output"]
 
-                # --- HUMANIZATION LAYER ---
-                # Add natural tone if missing
-                if not full_response.lower().startswith(("i ", "i'm", "i am")):
-                    full_response = "Hmm, let me think... 🤔\n\n" + full_response
+                # ---------------- HUMANIZATION LAYER ---------------- #
 
-                # --- TYPING EFFECT ---
+                # 1. Force first-person identity
+                full_response = full_response.replace("Arati", "I")
+
+                # 2. Context-aware touch
+                if len(st.session_state.messages) > 3:
+                    full_response = "As I mentioned earlier, " + full_response
+
+                # ---------------- TYPING EFFECT ---------------- #
                 typed_text = ""
                 for char in full_response:
                     typed_text += char
                     message_placeholder.markdown(typed_text)
-                    time.sleep(0.008)
+                    time.sleep(0.006)
 
             except Exception as e:
                 full_response = f"❌ Error: {str(e)}"
@@ -132,4 +137,4 @@ if user_input := st.chat_input(
 
 # --- FOOTER ---
 st.markdown("---")
-st.markdown("Built by Arati ❤️ | Digital Twin Project ")
+st.markdown("Built by Arati ❤️ | Digital Twin Project")
