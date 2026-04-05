@@ -1,4 +1,6 @@
 import os
+import config  #  Loads environment variables from .env
+
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
@@ -6,9 +8,8 @@ from langchain_community.chat_message_histories import ChatMessageHistory
 from langchain_core.chat_history import BaseChatMessageHistory
 
 # 1. SETUP API KEY
-os.environ["OPENAI_API_KEY"] = (
-    "OPENAI_API_KEY"
-)
+#  Removed hardcoded API key
+#  Now using .env via config.py
 
 # 2. SETUP THE MODEL
 llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
@@ -54,16 +55,16 @@ conversation = RunnableWithMessageHistory(
 print("--- Starting Conversation (LCEL Modern Way) ---")
 
 # We must provide a "session_id". This allows the bot to remember distinct users.
-config = {"configurable": {"session_id": "dhamu_session_1"}}
+config_runtime = {"configurable": {"session_id": "dhamu_session_1"}}
 
 # Turn 1
-response1 = conversation.invoke({"input": "Hi, I am Dhamu."}, config=config)
+response1 = conversation.invoke({"input": "Hi, I am Dhamu."}, config=config_runtime)
 print(f"\nUser: Hi, I am Dhamu.\nAI: {response1.content}")
 
 # Turn 2
-response2 = conversation.invoke({"input": "I like Python."}, config=config)
+response2 = conversation.invoke({"input": "I like Python."}, config=config_runtime)
 print(f"\nUser: I like Python.\nAI: {response2.content}")
 
 # Turn 3 (Testing Memory)
-response3 = conversation.invoke({"input": "What is my name?"}, config=config)
+response3 = conversation.invoke({"input": "What is my name?"}, config=config_runtime)
 print(f"\nUser: What is my name?\nAI: {response3.content}")
