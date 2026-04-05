@@ -5,4 +5,4 @@ chroma_db/
 chroma_db_agent/
 chroma_db_api/
 *.DS_Store
-memory_*.json
+memory*.json

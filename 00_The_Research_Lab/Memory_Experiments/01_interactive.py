@@ -1,13 +1,12 @@
 import os
+from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_community.chat_message_histories import FileChatMessageHistory
 
-# 1. SETUP (Paste your key)
-os.environ["OPENAI_API_KEY"] = (
-    "OPENAI_API_KEY"
-)
+# 1. LOAD ENV VARIABLES
+load_dotenv()
 
 # 2. MODEL & PROMPT
 llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
