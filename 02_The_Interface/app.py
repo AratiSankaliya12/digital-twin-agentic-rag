@@ -44,7 +44,6 @@ Hi, I’m **Arati’s AI Twin** 👋
 I can talk about my **projects, skills, and experience**,  
 and also explore the **internet when needed** 🌍  
 
-💬 Ask me anything like you would ask *me directly*.
 """
 )
 
@@ -133,4 +132,4 @@ if user_input := st.chat_input(
 
 # --- FOOTER ---
 st.markdown("---")
-st.markdown("Built by Arati | Digital Twin Project ")
+st.markdown("Built by Arati ❤️ | Digital Twin Project ")
