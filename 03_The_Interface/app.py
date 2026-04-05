@@ -1,28 +1,68 @@
 import streamlit as st
+import sys
 import os
+import time
 
-# Import the Brain (Your existing Agent code)
-# We import specific functions so we don't run the terminal loop
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 from agent_module.agent import setup_vectorstore, create_agent_system
 from langchain_community.chat_message_histories import FileChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
 # --- PAGE CONFIGURATION ---
-st.set_page_config(page_title="My AI Assistant", page_icon="🤖", layout="centered")
+st.set_page_config(
+    page_title="Digital Twin AI Assistant", page_icon="🧠", layout="centered"
+)
 
-st.title("🤖 Personal AI Assistant")
-st.markdown("I can read your **Files** 📂 and search the **Internet** 🌍.")
+# --- CUSTOM STYLING (Human Feel UI) ---
+st.markdown(
+    """
+<style>
+[data-testid="stChatMessage"] {
+    padding: 12px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+[data-testid="stChatMessage"][aria-label="assistant"] {
+    background-color: #1e1e2f;
+}
+[data-testid="stChatMessage"][aria-label="user"] {
+    background-color: #2b2b3d;
+}
+</style>
+""",
+    unsafe_allow_html=True,
+)
 
-# --- 1. SESSION STATE (The Browser Memory) ---
-# Streamlit refreshes the script on every click.
-# We must save the chat history in 'st.session_state' so it doesn't vanish.
+# --- HEADER ---
+st.title("🧠 Arati’s Digital Twin")
+
+st.markdown(
+    """
+Hi, I’m **Arati’s AI Twin** 👋  
+
+I can talk about my **projects, skills, and experience**,  
+and also explore the **internet when needed** 🌍  
+
+💬 Ask me anything like you would ask *me directly*.
+"""
+)
+
+# --- SESSION STATE ---
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
+# Initial human-like greeting
+if len(st.session_state.messages) == 0:
+    st.session_state.messages.append(
+        {
+            "role": "assistant",
+            "content": "Hey 👋 I'm Arati's Digital Twin. You can ask me about my projects, skills, or anything AI-related!",
+        }
+    )
 
-# --- 2. LOAD THE BRAIN (Cached) ---
-# We use @st.cache_resource so it only loads the database ONCE (start-up),
-# not every time you ask a question. This makes it fast.
+
+# --- LOAD AGENT ---
 @st.cache_resource
 def load_agent():
     vectorstore = setup_vectorstore()
@@ -32,28 +72,30 @@ def load_agent():
 
 agent_executor = load_agent()
 
-# --- 3. DISPLAY CHAT HISTORY ---
-# Re-draw all previous bubbles every time the screen updates
+# --- DISPLAY CHAT ---
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# --- 4. HANDLE USER INPUT ---
-if user_input := st.chat_input("Ask me anything about Arati or the world..."):
-    # A. Display User Message
+# --- INPUT ---
+if user_input := st.chat_input(
+    "Ask me about my projects, skills, or anything you're curious about..."
+):
+
+    # Show user message
     with st.chat_message("user"):
         st.markdown(user_input)
-    # Save to browser history
+
     st.session_state.messages.append({"role": "user", "content": user_input})
 
-    # B. Generate AI Response
+    # --- RESPONSE ---
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
 
-        # Show a "Thinking" spinner while the Agent decides tools
-        with st.spinner("Thinking... (Checking Files & Internet)"):
+        with st.spinner("Thinking... 🤔"):
+
             try:
-                # Wrap with Memory (Just like in terminal)
+
                 def get_session_history(session_id: str):
                     return FileChatMessageHistory(f"./memory_agent_{session_id}.json")
 
@@ -64,19 +106,31 @@ if user_input := st.chat_input("Ask me anything about Arati or the world..."):
                     history_messages_key="chat_history",
                 )
 
-                # RUN THE AGENT
                 config = {"configurable": {"session_id": "streamlit_user"}}
                 response = agent_with_memory.invoke(
                     {"input": user_input}, config=config
                 )
+
                 full_response = response["output"]
 
-                # Display Result
-                message_placeholder.markdown(full_response)
+                # --- HUMANIZATION LAYER ---
+                # Add natural tone if missing
+                if not full_response.lower().startswith(("i ", "i'm", "i am")):
+                    full_response = "Hmm, let me think... 🤔\n\n" + full_response
+
+                # --- TYPING EFFECT ---
+                typed_text = ""
+                for char in full_response:
+                    typed_text += char
+                    message_placeholder.markdown(typed_text)
+                    time.sleep(0.008)
 
             except Exception as e:
                 full_response = f"❌ Error: {str(e)}"
                 message_placeholder.error(full_response)
 
-    # Save AI Message to browser history
     st.session_state.messages.append({"role": "assistant", "content": full_response})
+
+# --- FOOTER ---
+st.markdown("---")
+st.markdown("Built by Arati | Digital Twin Project ")
