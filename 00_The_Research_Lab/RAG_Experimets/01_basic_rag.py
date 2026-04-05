@@ -1,4 +1,6 @@
 import os
+import config  # Loads environment variables from .env
+
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
@@ -8,13 +10,12 @@ from langchain_classic.chains import create_retrieval_chain
 from langchain_classic.chains.combine_documents import create_stuff_documents_chain
 
 # 1. SETUP API KEY
-os.environ["OPENAI_API_KEY"] = (
-    "OPENAI_API_KEY"
-)
+# Removed hardcoded API key
+# Using .env via config.py
 
 # 2. LOAD THE PDF
 # We assume the file is in a folder named 'data' one level up
-pdf_path = "../data/Arati_Resume.pdf"
+pdf_path = "../assets/Arati_Resume.pdf"
 print("--- Loading PDF ---")
 loader = PyPDFLoader(pdf_path)
 docs = loader.load()
@@ -31,6 +32,7 @@ print(f"Split into {len(splits)} chunks.")
 # This converts text -> numbers -> database
 print("--- Creating Vector Store (This may take a moment) ---")
 vectorstore = Chroma.from_documents(documents=splits, embedding=OpenAIEmbeddings())
+
 # Make the vector store a "Retriever" (Search Engine)
 retriever = vectorstore.as_retriever()
 
