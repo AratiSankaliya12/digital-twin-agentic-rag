@@ -24,11 +24,9 @@ from langchain_core.runnables.history import RunnableWithMessageHistory
 from langchain_community.chat_message_histories import FileChatMessageHistory
 
 # --- CONFIGURATION ---
-os.environ["OPENAI_API_KEY"] = (
-    "OPENAI_API_KEY"
-)
+os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 
-DATA_FOLDER = "../data/"
+DATA_FOLDER = "assets/"
 PERSIST_DIRECTORY = "./chroma_db"  # Where to save the vector database on disk
 
 

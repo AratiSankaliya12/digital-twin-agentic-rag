@@ -2,6 +2,7 @@
 venv/
 __pycache__/
 chroma_db/
+chroma_multi_modal/
 chroma_db_agent/
 chroma_db_api/
 *.DS_Store
