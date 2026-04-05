@@ -3,7 +3,7 @@ import os
 
 # Import the Brain (Your existing Agent code)
 # We import specific functions so we don't run the terminal loop
-from agent_bot import setup_vectorstore, create_agent_system
+from agent_module.agent import setup_vectorstore, create_agent_system
 from langchain_community.chat_message_histories import FileChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
