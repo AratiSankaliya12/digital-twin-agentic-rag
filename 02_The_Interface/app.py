@@ -120,7 +120,7 @@ if user_input := st.chat_input(
 
                 # 2. Context-aware touch
                 if len(st.session_state.messages) > 3:
-                    full_response = "As I mentioned earlier, " + full_response
+                    full_response = full_response
 
                 # ---------------- TYPING EFFECT ---------------- #
                 typed_text = ""
