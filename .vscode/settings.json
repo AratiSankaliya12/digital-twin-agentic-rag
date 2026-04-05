@@ -4,5 +4,8 @@
   },
   "search.exclude": {
     "**/venv": true
+  },
+  "files.watcherExclude": {
+    "**/venv/**": true
   }
 }
