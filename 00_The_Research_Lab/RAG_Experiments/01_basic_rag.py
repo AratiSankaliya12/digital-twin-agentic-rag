@@ -15,7 +15,7 @@ from langchain_classic.chains.combine_documents import create_stuff_documents_ch
 
 # 2. LOAD THE PDF
 # We assume the file is in a folder named 'data' one level up
-pdf_path = "../assets/Arati_Resume.pdf"
+pdf_path = "assets/Arati_Resume.pdf"
 print("--- Loading PDF ---")
 loader = PyPDFLoader(pdf_path)
 docs = loader.load()
