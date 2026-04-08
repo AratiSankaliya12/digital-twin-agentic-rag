@@ -116,7 +116,7 @@ if user_input := st.chat_input(
                 # ---------------- HUMANIZATION LAYER ---------------- #
 
                 # 1. Force first-person identity
-                full_response = full_response.replace("Arati", "I")
+                full_response = full_response.replace("Arati's", "my")
 
                 # 2. Context-aware touch
                 if len(st.session_state.messages) > 3:
