@@ -1,6 +1,7 @@
 import os
 import sys
 import shutil
+import config
 
 # 1. IMPORTS
 # Data Loading (Same as before)
@@ -36,7 +37,6 @@ from langchain_community.chat_message_histories import FileChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
 # --- CONFIGURATION ---
-os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 DATA_FOLDER = "assets/"
 PERSIST_DIRECTORY = "./chroma_db_agent"  # New DB folder for the agent
 
