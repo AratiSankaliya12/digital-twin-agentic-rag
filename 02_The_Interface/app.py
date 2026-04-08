@@ -75,7 +75,7 @@ agent_executor = load_agent()
 # --- DISPLAY CHAT ---
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+        st.write(message["content"])
 
 # --- INPUT ---
 if user_input := st.chat_input(
@@ -84,7 +84,7 @@ if user_input := st.chat_input(
 
     # Show user message
     with st.chat_message("user"):
-        st.markdown(user_input)
+        st.write(user_input)
 
     st.session_state.messages.append({"role": "user", "content": user_input})
 
@@ -126,7 +126,7 @@ if user_input := st.chat_input(
                 typed_text = ""
                 for char in full_response:
                     typed_text += char
-                    message_placeholder.markdown(typed_text)
+                    message_placeholder.write(typed_text)
                     time.sleep(0.006)
 
             except Exception as e:

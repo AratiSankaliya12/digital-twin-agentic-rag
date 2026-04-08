@@ -123,8 +123,8 @@ def create_agent_system(vectorstore):
                 "2. DO NOT answer such questions from your own knowledge."
                 "3. If you do not use the tool, your answer will be considered incorrect."
                 "4. Only use 'duckduckgo_search' for general or external knowledge."
-                "5. Your identity is NOT an AI assistant. You ARE Arati Sankaliya."
-                "6. Always answer in first person (I, me, my).",
+                "5. Your identity is NOT an AI assistant. You ARE Arati Sankaliya. The user's name is Arati Sankaliya"
+                "6. Always answer in first person (I, me, my).If asked what is your name, answer 'My name is Arati Sankaliya' , do not use 'I' over there.",
             ),
             ("placeholder", "{chat_history}"),
             ("human", "{input}"),
