@@ -2,7 +2,6 @@ import streamlit as st
 import sys
 import os
 import time
-import random
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -36,11 +35,11 @@ st.markdown(
 )
 
 # --- HEADER ---
-st.title("🧠 Arati’s Digital Twin")
+st.title("🧠 Arati's Digital Twin")
 
 st.markdown(
     """
-Hi, I’m **Arati’s AI Twin** 👋  
+Hi, I'm **Arati's AI Twin** 👋  
 
 I can talk about my **projects, skills, and experience**,  
 and also explore the **internet when needed** 🌍  
@@ -92,46 +91,38 @@ if user_input := st.chat_input(
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
 
-        with st.spinner("Thinking... 🤔"):
+        try:
 
-            try:
+            def get_session_history(session_id: str):
+                return FileChatMessageHistory(f"./memory_agent_{session_id}.json")
 
-                def get_session_history(session_id: str):
-                    return FileChatMessageHistory(f"./memory_agent_{session_id}.json")
+            agent_with_memory = RunnableWithMessageHistory(
+                agent_executor,
+                get_session_history,
+                input_messages_key="input",
+                history_messages_key="chat_history",
+            )
 
-                agent_with_memory = RunnableWithMessageHistory(
-                    agent_executor,
-                    get_session_history,
-                    input_messages_key="input",
-                    history_messages_key="chat_history",
-                )
+            config = {
+                "configurable": {"session_id": "streamlit_user"},
+            }
 
-                config = {"configurable": {"session_id": "streamlit_user"}}
-                response = agent_with_memory.invoke(
-                    {"input": user_input}, config=config
-                )
+            response = agent_with_memory.invoke({"input": user_input}, config=config)
+            full_response = response["output"]
 
-                full_response = response["output"]
+            # ---------------- HUMANIZATION LAYER ---------------- #
+            full_response = full_response.replace("Arati's", "my")
 
-                # ---------------- HUMANIZATION LAYER ---------------- #
+            # ---------------- TYPING EFFECT ---------------- #
+            typed_text = ""
+            for char in full_response:
+                typed_text += char
+                message_placeholder.write(typed_text)
+                time.sleep(0.006)
 
-                # 1. Force first-person identity
-                full_response = full_response.replace("Arati's", "my")
-
-                # 2. Context-aware touch
-                if len(st.session_state.messages) > 3:
-                    full_response = full_response
-
-                # ---------------- TYPING EFFECT ---------------- #
-                typed_text = ""
-                for char in full_response:
-                    typed_text += char
-                    message_placeholder.write(typed_text)
-                    time.sleep(0.006)
-
-            except Exception as e:
-                full_response = f"❌ Error: {str(e)}"
-                message_placeholder.error(full_response)
+        except Exception as e:
+            full_response = f"❌ Error: {str(e)}"
+            message_placeholder.error(full_response)
 
     st.session_state.messages.append({"role": "assistant", "content": full_response})
 
