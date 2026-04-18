@@ -1,6 +1,7 @@
 import os
 import sys
 import config
+from chromadb.config import Settings
 
 # 1. IMPORTS
 # Data Loading (Same as before)
@@ -80,10 +81,16 @@ def setup_vectorstore():
 
     embedding_model = OpenAIEmbeddings()
 
-    vectorstore = Chroma.from_documents(
-        documents=splits,
-        embedding=embedding_model,
-    )
+    try:
+        vectorstore = Chroma.from_documents(
+            documents=splits,
+            embedding=embedding_model,
+            client_settings=Settings(
+                persist_directory=None, anonymized_telemetry=False
+            ),
+        )
+    except Exception as e:
+        raise RuntimeError(f"Vector DB failed: {str(e)}")
     return vectorstore
 
 
