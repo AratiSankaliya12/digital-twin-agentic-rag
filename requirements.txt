@@ -4,11 +4,9 @@ langchain-community
 langchain-core
 langchain-openai
 langchain-chroma
+langchain-classic
 chromadb
 duckduckgo-search
 pypdf
 docx2txt
 tiktoken
-protobuf==3.20.3
-grpcio==1.56.2
-setuptools==68.0.0
