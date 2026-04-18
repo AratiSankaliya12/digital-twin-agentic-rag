@@ -6,7 +6,7 @@ langchain-openai
 langchain-chroma
 langchain-classic
 chromadb
-duckduckgo-search
+duckduckgo-search>=6.2.0
 pypdf
 docx2txt
 tiktoken
