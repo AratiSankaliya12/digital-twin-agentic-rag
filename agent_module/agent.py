@@ -138,7 +138,7 @@ def create_agent_system(vectorstore):
     # E. Construct Agent
     agent = create_tool_calling_agent(llm, tools, prompt)
     agent_executor = AgentExecutor(
-        agent=agent, tools=tools, verbose=True
+        agent=agent, tools=tools, verbose=True, return_intermediate_steps=True
     )  # Verbose=True lets you see the "Thinking" process
     return agent_executor
 
