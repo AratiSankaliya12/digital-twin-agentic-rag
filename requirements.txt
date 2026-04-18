@@ -9,3 +9,4 @@ duckduckgo-search
 pypdf
 docx2txt
 tiktoken
+protobuf==3.20.3
