@@ -1,7 +1,7 @@
 import os
 import sys
 import config
-from chromadb.config import Settings
+import chromadb
 
 # 1. IMPORTS
 # Data Loading (Same as before)
@@ -82,12 +82,14 @@ def setup_vectorstore():
     embedding_model = OpenAIEmbeddings()
 
     try:
+        # Use EphemeralClient for a pure in-memory Chroma instance.
+        # This avoids SQLite file I/O errors on read-only environments like Streamlit Cloud.
+        chroma_client = chromadb.EphemeralClient()
+
         vectorstore = Chroma.from_documents(
             documents=splits,
             embedding=embedding_model,
-            client_settings=Settings(
-                persist_directory=None, anonymized_telemetry=False
-            ),
+            client=chroma_client,
         )
     except Exception as e:
         raise RuntimeError(f"Vector DB failed: {str(e)}")
@@ -142,7 +144,6 @@ def create_agent_system(vectorstore):
 
 
 # --- PART 3: MEMORY ---
-import os
 import tempfile
 
 
