@@ -17,7 +17,7 @@ from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 
 # Tools
 from langchain_core.tools import create_retriever_tool
-from langchain_community.tools import DuckDuckGoSearchRun
+from langchain_community.tools import DuckDuckGoSearchResults
 
 # Agent & Memory
 # Use langchain_classic for agent tool-calling compatibility
@@ -109,7 +109,7 @@ def create_agent_system(vectorstore):
     )
 
     # B. Create the Internet Tool
-    web_tool = DuckDuckGoSearchRun()
+    web_tool = DuckDuckGoSearchResults(backend="text")
 
     # C. Toolbox
     tools = [rag_tool, web_tool]
