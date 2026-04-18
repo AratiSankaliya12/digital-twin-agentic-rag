@@ -1,5 +1,6 @@
 import os
 import sys
+from tabnanny import verbose
 import config
 import chromadb
 
