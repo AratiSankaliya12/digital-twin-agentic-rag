@@ -1,13 +1,20 @@
 import os
-import streamlit as st
 
-# Try Streamlit secrets first
-if "OPENAI_API_KEY" in st.secrets:
-    os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+try:
+    import streamlit as st
 
-# Fallback to environment (local)
+    api_key = st.secrets.get("OPENAI_API_KEY", None)
+except Exception:
+    api_key = None
+
+# Priority 1: Streamlit secrets
+if api_key:
+    os.environ["OPENAI_API_KEY"] = api_key
+
+# Priority 2: Environment variable (local)
 elif os.getenv("OPENAI_API_KEY"):
     os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 
+# Final fallback
 else:
-    raise ValueError("OPENAI_API_KEY not found")
+    raise ValueError("OPENAI_API_KEY not found in Streamlit secrets or environment")
