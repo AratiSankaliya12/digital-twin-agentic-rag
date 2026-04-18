@@ -38,7 +38,9 @@ from langchain_core.runnables.history import RunnableWithMessageHistory
 
 # --- CONFIGURATION ---
 DATA_FOLDER = "assets/"
-PERSIST_DIRECTORY = "./chroma_db_agent"  # New DB folder for the agent
+import tempfile
+
+PERSIST_DIRECTORY = os.path.join(tempfile.gettempdir(), "chroma_db_agent")
 
 
 # --- PART 1: KNOWLEDGE BASE (Same Logic, New DB) ---
