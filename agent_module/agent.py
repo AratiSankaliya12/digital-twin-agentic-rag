@@ -1,6 +1,5 @@
 import os
 import sys
-import shutil
 import config
 
 # 1. IMPORTS
@@ -38,18 +37,10 @@ from langchain_core.runnables.history import RunnableWithMessageHistory
 
 # --- CONFIGURATION ---
 DATA_FOLDER = "assets/"
-import tempfile
-
-PERSIST_DIRECTORY = os.path.join(tempfile.gettempdir(), "chroma_db_agent")
 
 
 # --- PART 1: KNOWLEDGE BASE (Same Logic, New DB) ---
 def setup_vectorstore():
-    # We clean the DB to handle new files/Java/Images correctly
-    if os.path.exists(PERSIST_DIRECTORY):
-        print(f"--- 0. Flushing old memory: Deleting '{PERSIST_DIRECTORY}' ---")
-        shutil.rmtree(PERSIST_DIRECTORY)
-
     print(f"--- 1. Scanning '{DATA_FOLDER}' ---")
     all_docs = []
 
@@ -77,9 +68,8 @@ def setup_vectorstore():
                 # Skip file on load error but log the exception for debugging
                 print(f"   ! Skipping {file} due to error: {e}")
 
-    if not all_docs:
-        print("ERROR: No valid documents found!")
-        sys.exit()
+        if not all_docs:
+            raise ValueError("No valid documents found in assets folder")
 
     # Split
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
@@ -87,10 +77,12 @@ def setup_vectorstore():
 
     # Embed
     print("--- 2. Building Vector Database ---")
+
+    embedding_model = OpenAIEmbeddings()
+
     vectorstore = Chroma.from_documents(
         documents=splits,
-        embedding=OpenAIEmbeddings(),
-        persist_directory=PERSIST_DIRECTORY,
+        embedding=embedding_model,
     )
     return vectorstore
 
@@ -143,8 +135,14 @@ def create_agent_system(vectorstore):
 
 
 # --- PART 3: MEMORY ---
+import os
+import tempfile
+
+
 def get_session_history(session_id: str):
-    return FileChatMessageHistory(f"./memory_agent_{session_id}.json")
+    return FileChatMessageHistory(
+        os.path.join(tempfile.gettempdir(), f"memory_{session_id}.json")
+    )
 
 
 # --- MAIN ---
