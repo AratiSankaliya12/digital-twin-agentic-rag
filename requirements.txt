@@ -1,0 +1,9 @@
+streamlit
+langchain
+langchain-community
+langchain-core
+langchain-openai
+chromadb
+duckduckgo-search
+pypdf
+docx2txt
