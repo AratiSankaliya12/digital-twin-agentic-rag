@@ -1,9 +1,13 @@
-from dotenv import load_dotenv
 import os
+import streamlit as st
 
-load_dotenv()
+# Try Streamlit secrets first
+if "OPENAI_API_KEY" in st.secrets:
+    os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
 
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+# Fallback to environment (local)
+elif os.getenv("OPENAI_API_KEY"):
+    os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 
-if not OPENAI_API_KEY:
-    raise ValueError("OPENAI_API_KEY not found in .env")
+else:
+    raise ValueError("OPENAI_API_KEY not found")
