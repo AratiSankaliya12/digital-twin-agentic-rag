@@ -3,7 +3,9 @@ langchain
 langchain-community
 langchain-core
 langchain-openai
+langchain-chroma
 chromadb
 duckduckgo-search
 pypdf
 docx2txt
+tiktoken
