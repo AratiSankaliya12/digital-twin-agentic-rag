@@ -101,7 +101,7 @@ if user_input := st.chat_input(
                 history_messages_key="chat_history",
             )
 
-            config = {"configurable": {"session_id": "streamlit_user"}}
+            config = {"configurable": {"session_id": "streamlit_user_v2"}}
 
             response = agent_with_memory.invoke({"input": user_input}, config=config)
 
