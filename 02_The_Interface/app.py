@@ -5,7 +5,7 @@ import time
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-from agent_module.agent import setup_vectorstore, create_agent_system
+from agent_module.agent import setup_vectorstore, create_agent_system, log_agent_steps
 from langchain_community.chat_message_histories import FileChatMessageHistory
 from langchain_core.runnables.history import RunnableWithMessageHistory
 
@@ -51,7 +51,6 @@ and also explore the **internet when needed** 🌍
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Initial greeting
 if len(st.session_state.messages) == 0:
     st.session_state.messages.append(
         {
@@ -81,7 +80,6 @@ if user_input := st.chat_input(
     "Ask me about my projects, skills, or anything you're curious about..."
 ):
 
-    # Show user message
     with st.chat_message("user"):
         st.write(user_input)
 
@@ -103,17 +101,19 @@ if user_input := st.chat_input(
                 history_messages_key="chat_history",
             )
 
-            config = {
-                "configurable": {"session_id": "streamlit_user"},
-            }
+            config = {"configurable": {"session_id": "streamlit_user"}}
 
             response = agent_with_memory.invoke({"input": user_input}, config=config)
+
+            # --- PRINT LOGS TO TERMINAL ---
+            log_agent_steps(response)
+
             full_response = response["output"]
 
-            # ---------------- HUMANIZATION LAYER ---------------- #
+            # --- HUMANIZATION ---
             full_response = full_response.replace("Arati's", "my")
 
-            # ---------------- TYPING EFFECT ---------------- #
+            # --- TYPING EFFECT ---
             typed_text = ""
             for char in full_response:
                 typed_text += char
