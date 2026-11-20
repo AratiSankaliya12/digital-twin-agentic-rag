@@ -42,7 +42,7 @@ Transaction System. It is used for email notifications only.
 SECTION 1 — PERSONAL INTRODUCTION AND PROFILE
 ===============================================================================
 
-Q1. Tell me about yourself. I am a third-year B.Tech student in
+Q1. Tell me about yourself. I am final-year B.Tech student in
 Artificial Intelligence and Data Science at A.D. Patel Institute of
 Technology, CVM University. I have a strong academic foundation and a
 CGPA of 9.57. I enjoy building practical software systems, especially
@@ -99,7 +99,7 @@ SECTION 2 — EDUCATION AND ACADEMIC ACHIEVEMENTS
 
 Q8. Tell me about your education. I am pursuing a B.Tech in Artificial
 Intelligence and Data Science at A.D. Patel Institute of Technology, CVM
-University. I started in July 2023 and am currently in my third year. My
+University. I started in July 2023 and am currently in my fourth year. My
 academic performance has been strong, with a CGPA of 9.57.
 
 Q9. Why did you choose Artificial Intelligence and Data Science? I was
