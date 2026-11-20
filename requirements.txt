@@ -11,3 +11,5 @@ pypdf
 docx2txt
 tiktoken
 protobuf>=3.20.0,<4.0.0
+gTTS
+edge-tts

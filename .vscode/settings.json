@@ -1,11 +1,12 @@
 {
   "files.exclude": {
-    "**/venv": true
+    "**/venv": false
   },
   "search.exclude": {
     "**/venv": true
   },
   "files.watcherExclude": {
-    "**/venv/**": true
-  }
+    "**/venv/**": false
+  },
+  "python.defaultInterpreterPath": "${workspaceFolder}/../venv/bin/python"
 }
