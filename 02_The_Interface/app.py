@@ -67,17 +67,22 @@ if len(st.session_state.messages) == 0:
         }
     )
 
-
 # --- LOAD AGENT ---
 
-# Clear previously cached resources
+# Clear cached agent and vectorstore
 st.cache_resource.clear()
 
 
 @st.cache_resource
 def load_agent():
+    print("Loading updated knowledge base...")
+
     vectorstore = setup_vectorstore()
+
+    print("Creating agent system...")
     agent_executor = create_agent_system(vectorstore)
+
+    print("Digital Twin is ready!")
     return agent_executor
 
 
