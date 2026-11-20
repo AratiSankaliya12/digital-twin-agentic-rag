@@ -69,6 +69,11 @@ if len(st.session_state.messages) == 0:
 
 
 # --- LOAD AGENT ---
+
+# Clear previously cached resources
+st.cache_resource.clear()
+
+
 @st.cache_resource
 def load_agent():
     vectorstore = setup_vectorstore()
@@ -77,6 +82,7 @@ def load_agent():
 
 
 agent_executor = load_agent()
+
 
 # --- SIDEBAR SETTINGS ---
 with st.sidebar:
